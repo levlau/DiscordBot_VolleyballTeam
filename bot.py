@@ -1,28 +1,27 @@
 import discord
 import constants
 from random import randint, choice
+import json
 
-
-client = None
-
-def get_helpDisplay(cl):
+async def get_helpDisplay(mes):
     help_embed = discord.Embed(
     title="Help",
     color=discord.Color.green()
     )
     help_embed.add_field(
-        name="\'ping\'",
-        value="Pong",
-        inline=False
-    )  
-    help_embed.add_field(
         name="\'training\'",
         value="Gibt eine zufällige Übung aus",
         inline=False
     )
-    return help_embed
+    help_embed.add_field(
+        name="\'positionen\'",
+        value="Gibt alle Spielpositionen aus",
+        inline=False
+    )
+    await mes.channel.send(embed=help_embed)
 
-def get_training(cl):
+
+async def get_training(mes):
     uebung = choice(constants.uebungen)
     diff = uebung["kraft"] + uebung["ausdauer"]
     if not uebung["auf_zeit"]:
@@ -43,14 +42,15 @@ def get_training(cl):
         value=diff,
         inline=False
     )
-    return training_embed
+    await mes.channel.send(embed=training_embed)
 
-def get_positionen(cl):
+
+async def get_positionen(mes):
     positionen_embed = discord.Embed(
          title="Positionen",
          color=discord.Color.blurple()
     )
-    roles = cl.guilds[0].roles
+    roles = mes.guild.roles
     for role in roles:  # für jede rolle 
 
         members_str = ""
@@ -66,13 +66,20 @@ def get_positionen(cl):
                 inline=False
             )
                 
-    return positionen_embed
+    await mes.channel.send(embed=positionen_embed)
 
+
+async def get_info(mes):
+    name = str(mes.content).split()[1]
+    with open("player_info.json", "r") as file:
+        data = json.load(file)
+    
 
 functions = {
     "help": get_helpDisplay,
     "training" : get_training,
-    "positionen" : get_positionen
+    "positionen" : get_positionen,
+    "info" : get_info
 }
 
 client = discord.Client(intents=discord.Intents.all())
@@ -84,11 +91,10 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-        if str(message.channel.id) == "1069625527213752330" and  not message.author.bot:
-            await message.channel.send(embed=functions[str(message.content)](client))
-            # try:
-            #     await message.channel.send(embed=functions[message.content](client))
-            # except:
-            #     await message.channel.send("Kein command")
+    if str(message.channel.id) == "1069625527213752330" and  not message.author.bot:
+        try:
+            await functions[str(message.content).split()[0]](mes=message)
+        except:
+            await message.channel.send("Kein command")
 
 client.run(constants.TOKEN)
