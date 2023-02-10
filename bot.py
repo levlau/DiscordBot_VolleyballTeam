@@ -70,9 +70,14 @@ async def get_positionen(mes):
 
 
 async def get_info(mes):
-    name = str(mes.content).split()[1]
-    with open("player_info.json", "r") as file:
+    content = str(mes.content).split()
+    if(len(content) <= 1):
+        mes.channel.send("Keinen user angegeben")
+        return
+    arg = content[1]  # noch davor überprüfen, damit nicht null
+    with open("player_info.json", "r") as file:  # json öffen und danach automatisch schließen
         data = json.load(file)
+        print(data[0]["name"])
     
 
 functions = {
@@ -92,9 +97,10 @@ async def on_ready():
 @client.event
 async def on_message(message):
     if str(message.channel.id) == "1069625527213752330" and  not message.author.bot:
-        try:
-            await functions[str(message.content).split()[0]](mes=message)
-        except:
-            await message.channel.send("Kein command")
+        await functions[str(message.content).split()[0]](mes=message)
+        # try:
+        #     await functions[str(message.content).split()[0]](mes=message)
+        # except:
+        #     await message.channel.send("Kein command")
 
 client.run(constants.TOKEN)
