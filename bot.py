@@ -18,6 +18,11 @@ async def get_helpDisplay(mes):
         value="Gibt alle Spielpositionen aus",
         inline=False
     )
+    help_embed.add_field(
+        name="\'info <name>\'",
+        value="Gibt Infos zu dem Spieler aus",
+        inline=False
+    )
     await mes.channel.send(embed=help_embed)
 
 
@@ -71,13 +76,26 @@ async def get_positionen(mes):
 
 async def get_info(mes):
     content = str(mes.content).split()
+    arg = content[1]
     if(len(content) <= 1):
-        mes.channel.send("Keinen user angegeben")
-        return
-    arg = content[1]  # noch davor überprüfen, damit nicht null
+        arg = mes.author.nick
     with open("player_info.json", "r") as file:  # json öffen und danach automatisch schließen
         data = json.load(file)
-        print(data[0]["name"])
+        for name in data:
+            if name["name"] == arg:
+
+                info_embed = discord.Embed(
+                    title=f"Info zu {arg}",
+                    color=discord.Color.blue()
+                )
+                info_embed.set_thumbnail(url="")    # todo: schauen wegen http request (z.b. apache starten und bilder da verfügbar machen)
+                info_embed.add_field(
+                    name="Coins",
+                    value=name["coins"],
+                    inline=False
+                )
+                await mes.channel.send(embed=info_embed)
+                break
     
 
 functions = {
