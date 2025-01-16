@@ -1,52 +1,8 @@
 [
     {
-        "name" : "Levi",
+        "name" : "Example",
         "coins" : 10,
         "img" : ""
     },
-    {
-        "name" : "Tino",
-        "coins" : 1,
-        "img" : "images/tino.png"
-    },
-    {
-        "name" : "Konstantin",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Jona",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Aiden",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Bunjamin",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Valentin",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Emil",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Jamie",
-        "coins" : 5,
-        "img" : ""
-    },
-    {
-        "name" : "Mateo",
-        "coins" : 5,
-        "img" : ""
-    }
+    
 ]
