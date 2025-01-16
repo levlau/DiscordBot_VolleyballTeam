@@ -1,4 +1,4 @@
-TOKEN = "MTA2NzEyNzg3MzMyNjAzOTE3MA.G1Cwip.io5fdpqudPPUuMv4BwbMnYcCPDno0-rv4-2iXY"
+TOKEN = ""
 uebungen = [
     {"name":"Liegestützen", "kraft":3, "ausdauer":3, "auf_zeit":False},
     {"name":"Diamant-Liegestützen", "kraft":4, "ausdauer":3, "auf_zeit":False},
